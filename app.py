@@ -20,7 +20,7 @@ class Cascada(QtWidgets.QWidget):
         #self.load_template('layout.html')
         self.document = self.get_document()
         self.title = self.document("title").text()
-        #self.data = self.document("h1").attr("data-id")
+        # TODO: Use expreg for match extend file
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.show()
