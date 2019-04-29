@@ -2,29 +2,14 @@
 from PyQt5 import QtWidgets
 from pyquery import PyQuery as pq
 import os.path
-
-INHERITED_ATTRS = ('_returns',)
-
-class Meta(type):
-    def __new__(meta, name, bases, attrs):
-        parent = type.__new__(meta, name, bases, {})
-        for key, value in list(attrs.items()):
-            if not key.startswith('__') and callable(value):
-                value = propagate(getattr(parent, key, None), value)
-                print("key: %s, value: %s" % (key, value))
-        #print("cls %s, name %s, base %s, attrs %s " % (cls, name, bases, attrs))
-        return type.__new__(meta, name, bases, attrs)
-
-def propagate(method1, method2):
-    if method1:
-        for attr in INHERITED_ATTRS:
-            if hasattr(method1, attr) and not hasattr(method2, attr):
-                setattr(method2, attr, getattr(method1, attr))
-    return method2
+from cascabel import api
 
 
-class Base(Meta('DummyModel', (object,),{})):
+class Base(api.Meta('DummyModel', (object,),{})):
     _name = False
+
+    def load_template(self):
+        pass
 
 
 class Cascada(QtWidgets.QWidget):
